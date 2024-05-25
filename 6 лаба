@@ -1,0 +1,59 @@
+'''Задание состоит из двух частей. 
+1 часть – написать программу в соответствии со своим вариантом задания. Написать 2 варианта формирования (алгоритмический и с помощью функций Питона), сравнив по времени их выполнение.
+2 часть – усложнить написанную программу, введя по своему усмотрению в условие минимум одно ограничение на характеристики объектов (которое будет сокращать количество переборов)  и целевую функцию для нахождения оптимального  решения.
+Вариант 10. Составьте все различные лексемы из букв слова «абракадабра» по законам русского языка.'''
+
+from itertools import permutations
+import time
+
+def generate_lexemes(word):
+    lexemes = set()
+    for r in range(1, len(word) + 1):
+        lexemes.update([''.join(p) for p in permutations(word, r)])
+    return lexemes
+
+word = "абракадабра"
+lexemes = generate_lexemes(word)
+print("Все различные лексемы из слова 'абракадабра':", lexemes)
+print("Всего найдено лексем:", len(lexemes))
+def generate_lexemes(word):
+    lexemes = set()
+    for r in range(1, len(word) + 1):
+        lexemes.update([''.join(p) for p in permutations(word, r)])
+    return lexemes
+
+def generate_lexemes_func(word):
+    lexemes = set()
+    for r in range(1, len(word) + 1):
+        lexemes.update(map(''.join, permutations(word, r)))
+    return lexemes
+
+word = "абракадабра"
+
+# Измеряем время выполнения для алгоритмической версии
+start_time = time.time()
+lexemes_alg = generate_lexemes(word)
+end_time = time.time()
+print("Время выполнения алгоритмической версии:", end_time - start_time)
+
+# Измеряем время выполнения для версии с использованием функций Python
+start_time = time.time()
+lexemes_func = generate_lexemes_func(word)
+end_time = time.time()
+print("Время выполнения версии с использованием функций Python:", end_time - start_time)
+
+print("Результаты алгоритмической версии и версии с использованием функций Python одинаковы:", lexemes_alg == lexemes_func)
+
+def generate_lexemes_with_constraint(word, min_length):
+    lexemes = set()
+    for r in range(min_length, len(word) + 1):
+        lexemes.update([''.join(p) for p in permutations(word, r)])
+    return lexemes
+
+word = "абракадабра"
+min_length = 3
+
+lexemes_with_constraint = generate_lexemes_with_constraint(word, min_length)
+print("Все различные лексемы из слова 'абракадабра' длиной не менее", min_length, "символов:", lexemes_with_constraint)
+print("Всего найдено лексем:", len(lexemes_with_constraint))
+
